@@ -41,19 +41,24 @@ void initialiser(Route &r, size_t taille, int vmax) {
  * etre interessant de prevoir une fonction auxiliaire pour cela)
  */
 void ajouter(Route &r, int pos) {
-    int position; //garde la valeur de i
-    for(int i = pos; i < r.occupe.size(); i++){
+    int position = 0; //garde la valeur de i
+    for(size_t i = pos; i < r.occupe.size(); i=i+1){
         if(r.occupe.at(i) == 0){
             position = i;
             break;
         }
+        else{
+            continue;
+        }
     }
+    
     r.occupe.at(position) = 1; // dis que la position est occupée par la voiture
-    r.voitures.resize(r.voitures.size() + 1); // donne la lettre d'après à la voiture
-    r.voitures.at(-1).identification = char(dispo(r));
-    r.voitures.at(-1).vitesse = 0;  //la vitesse de la voiture est nulle
-    r.voitures.at(-1).position = position;
+    r.voitures.resize(r.voitures.size() + 1); // On ajoute une voiture dans le tableau
+    r.voitures.at(r.voitures.size()-1).identification = char(dispo(r)); // donne à la voiture la prochaine lettre avec dispo
+    r.voitures.at(r.voitures.size()-1).vitesse = 0;  // la vitesse de la voiture est nulle
+    r.voitures.at(r.voitures.size()-1).position = position; // donne la position de la voiture
 }
+
 
 void accelerer(Route &r) {
   // a faire
