@@ -11,6 +11,16 @@ int saVitesse(Route const &r, char Id);
 bool aRalenti(Route const &r, char Id);
 void setPV(Route &r, double newPV), setVMax(Route &r, int newVMax);
 
+int dispo(Route r){ //récup l'id de la dernière voiture
+    int maxvoiture = 0, code;
+    code = r.voitures.at(-1).identification;
+    if(code == 90){
+        return 97;
+    }
+    else{
+        return code+1;
+    }
+}
 
 // Les fonctions que vous écrivez peuvent prevoir d'afficher des messages de
 // debug quand cette variable globale vaut true
@@ -31,9 +41,19 @@ void initialiser(Route &r, size_t taille, int vmax) {
  * etre interessant de prevoir une fonction auxiliaire pour cela)
  */
 void ajouter(Route &r, int pos) {
-  // a faire
+    int position; //garde la valeur de i
+    for(int i = pos; i < r.occupe.size(); i++){
+        if(r.occupe.at(i) == 0){
+            position = i;
+            break;
+        }
+    }
+    r.occupe.at(position) = 1; // dis que la position est occupée par la voiture
+    r.voitures.resize(r.voitures.size() + 1); // donne la lettre d'après à la voiture
+    r.voitures.at(-1).identification = char(dispo(r));
+    r.voitures.at(-1).vitesse = 0;  //la vitesse de la voiture est nulle
+    r.voitures.at(-1).position = position;
 }
-
 
 void accelerer(Route &r) {
   // a faire
